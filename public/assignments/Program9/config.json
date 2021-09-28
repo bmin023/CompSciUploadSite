@@ -1,0 +1,12 @@
+{
+  "name": "Read File",
+  "desc": "Read a file and return the min, max, sum, and average of the integers in that file.",
+  "visible": true,
+  "input": [
+    "prog9a.txt",
+    "prog9a\nprog9b.txt",
+    "prog9c.txt",
+    "prog\nprog9d.txt"
+  ],
+  "order": 9
+}

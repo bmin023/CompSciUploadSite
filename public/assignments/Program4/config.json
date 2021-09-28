@@ -1,0 +1,7 @@
+{
+  "name": "Sum Digits in an Integer",
+  "desc": "Given an integer, sum each digit and print to the screen.",
+  "visible": true,
+  "input": ["12345", "98765", "684136", "45"],
+  "order": 4
+}

@@ -1,0 +1,6 @@
+{
+  "name": "Print a Table",
+  "desc": "Use multiple couts to print a table to the screen.",
+  "visible": true,
+  "order": 2
+}

@@ -1,0 +1,6 @@
+{
+  "name": "Approximate PI",
+  "desc": "Use the given formula to print and approximation of PI to the screen.",
+  "visible": true,
+  "order": 3
+}

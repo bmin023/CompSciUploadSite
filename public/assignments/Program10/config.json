@@ -1,0 +1,12 @@
+{
+  "name": "Ceasar Cipher",
+  "desc": "Read a file, then decrypt or encrypt it using a classic Ceasar Cipher,",
+  "visible": true,
+  "input": [
+    "This_is_a_bad_file_name\ndecrypt",
+    "plainText.txt\nopenFile",
+    "plainText1.txt\nencrypt",
+    "encrypted1.txt\ndecrypt"
+  ],
+  "order": 10
+}

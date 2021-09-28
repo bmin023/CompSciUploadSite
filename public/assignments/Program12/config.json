@@ -1,0 +1,8 @@
+
+{
+  "name": "Class Average",
+  "desc": "Given a file of names and files for students, go through them and calculate their averages and the class average. \nNote: iomanip isn't working quite properly yet. So formatting differs between this one and Booth's",
+  "visible": true,
+  "input": ["Bad", "names.dat"],
+  "order": 12
+}

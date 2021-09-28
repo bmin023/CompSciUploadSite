@@ -1,0 +1,7 @@
+{
+  "name": "Quadratic Formula",
+  "desc": "Given the coefficients of a quadratic equation, out put the roots and the vertex.",
+  "visible": true,
+  "input": ["3\n4\n5"],
+  "order": 6
+}

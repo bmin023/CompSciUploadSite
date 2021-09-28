@@ -1,0 +1,13 @@
+{
+  "name": "Letter Grade",
+  "desc": "Given five grades, output the average as well as the letter grade, min, max, and median.",
+  "visible": true,
+  "input": [
+    "88\n79\n93\n42\n100",
+    "1\n2\n3\n4\n5",
+    "71\n92\n83\n-4\n53",
+    "7.1\n9.2\n8.3\n0.4\n0.53",
+    "77.1\n69.2\n88.3\n55.4\n73.53"
+  ],
+  "order": 7
+}

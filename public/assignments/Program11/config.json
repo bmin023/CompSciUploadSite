@@ -1,0 +1,12 @@
+{
+  "name": "GPS",
+  "desc": "Read GPS Data, and calculate the total distance traveled, distance from start, and average distance from start.",
+  "visible": true,
+  "input": [
+    "BadFileName\nprog11a.txt",
+    "prog11b.txt",
+    "BadFileName\nBadCommand\nprog11c.txt",
+    "prog11d.txt"
+  ],
+  "order": 11
+}

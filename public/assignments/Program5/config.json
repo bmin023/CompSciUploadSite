@@ -1,0 +1,17 @@
+{
+  "name": "Mean",
+  "desc": "Return the Arithmetic Mean, Geometric Mean, Harmonic Mean, and Standard Deviation of five integers.",
+  "visible": true,
+  "input": [
+    "85\n43\n95\n100\n85",
+    "5\n3\n4\n11\n1",
+    "36\n14\n37\n4\n16",
+    "151\n44\n136\n67\n159",
+    "1416\n1105\n1909\n2896\n2537",
+    "17\n17\n1\n15\n16",
+    "20\n20\n20\n20\n20",
+    "1\n1\n1\n1\n1",
+    "2\n1\n3\n3\n3"
+  ],
+  "order": 5
+}
