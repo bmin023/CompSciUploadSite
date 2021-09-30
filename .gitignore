@@ -6,6 +6,9 @@
 .pnp.js
 /.vscode
 
+#ignore public uploads
+/public/assignments/*/upload.cpp
+
 # testing
 /coverage
 

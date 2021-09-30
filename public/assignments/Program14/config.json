@@ -1,0 +1,8 @@
+{
+  "name": "Array Backwards",
+  "desc": "Given an array, output in forwards and backwards, also output the min, max, sum, and number of duplicates in the array.",
+  "visible": true,
+  "input": ["10\n1\n2\n3\n4\n3\n2\n1\n9\n8\n7\n","17\n-49\n36\n36\n37\n40\n-23\n43\n29\n-10\n15\n-17\n29\n24\n-38\n-34\n5\n23",
+  "21\n1\n3\n-3\n3\n1\n-4\n0\n-4\n-4\n-4\n-1\n-4\n4\n4\n-3\n-5\n-1\n-3\n-2\n-4\n1","1\n-3","15\n4\n-4\n-2\n1\n-3\n3\n5\n4\n4\n0\n-2\n3\n-1\n-1\n-3"],
+  "order": 14
+}

@@ -1,0 +1,7 @@
+{
+  "name": "Fibonacci Array",
+  "desc": "Given an unknown amount of inputs, output the fibonacci at the index of those inputs.",
+  "visible": true,
+  "input": ["11\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10", "1\n52","5\n50\n75\n85\n90\n27"],
+  "order": 13
+}
