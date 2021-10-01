@@ -1,18 +1,19 @@
+import { Options } from "compile-run";
+import { compileCpp } from "compile-run/dist/lib/cpp/compile-file";
 import fs from "fs";
 import readline from "readline";
-import { cpp, Options } from "compile-run";
-import { compileCpp } from "compile-run/dist/lib/cpp/compile-file";
-import { execute, runExecutable } from "./compileRunUtils";
-import path from "path";
+
+import { runExecutable } from "./compileRunUtils";
+
 export function getFolders(filePath: fs.PathLike): string[] {
-  let filenames = fs.readdirSync(filePath);
+  const filenames = fs.readdirSync(filePath);
   return filenames.filter((value) => {
     return !value.includes(".");
   });
 }
 
 function getConfig(folder: fs.PathLike): JSONConfig {
-  let buffer = fs.readFileSync(`./public/assignments/${folder}/config.json`);
+  const buffer = fs.readFileSync(`./public/assignments/${folder}/config.json`);
   return JSON.parse(buffer as unknown as string) as JSONConfig;
 }
 
@@ -32,9 +33,9 @@ export type Assignment = {
 };
 
 export function getAssignments(): Assignment[] {
-  let assignments = [] as Assignment[];
+  const assignments = [] as Assignment[];
   getFolders("./public/assignments").forEach((folder) => {
-    let config = getConfig(folder);
+    const config = getConfig(folder);
     if (config.visible) {
       assignments.push({
         name: config.name,
@@ -57,7 +58,7 @@ export type CodeReturn = {
 };
 
 async function getWarnings(filepath: string) {
-  let warnings: string[] = [];
+  const warnings: string[] = [];
   const fileStream = fs.createReadStream(filepath);
 
   const rl = readline.createInterface({
@@ -65,9 +66,9 @@ async function getWarnings(filepath: string) {
     crlfDelay: Infinity,
   });
 
-  //Author, Assignment Title, Assignment Description, Due Date, Date Created, Date Last Modified,
+  // Author, Assignment Title, Assignment Description, Due Date, Date Created, Date Last Modified,
   // Data Abstraction, Input, Process, Output, Assumptions
-  let headers: boolean[] = [
+  const headers: boolean[] = [
     false,
     false,
     false,
@@ -109,19 +110,22 @@ async function getWarnings(filepath: string) {
       comment = true;
       singleComment = true;
     }
+
+    if (line.length > 80) {
+      warnings.push(`Line ${count} is too long.`);
+    }
+
     if (lower.includes("/*")) comment = true;
     else if (lower.includes("*/")) comment = false;
     if (!comment) {
-
-      //Lower Indent before checking indent.
+      // Lower Indent before checking indent.
       if (lower.includes("}")) indent--;
-      
+
       let first = lower.search(/\S/);
       if (first > 0) {
         if (!foundTrueMinSpace && indent == 1) {
           minSpace = first;
           foundTrueMinSpace = true;
-          console.log("MinSpace Set", first);
         }
         if (indent > 0) {
           lower.replace("\t", " ".repeat(minSpace));
@@ -164,28 +168,28 @@ async function getWarnings(filepath: string) {
 }
 
 export function getReturns(folder: string): Promise<CodeReturn> {
-  let config = getConfig(folder);
+  const config = getConfig(folder);
   let promise: Promise<CodeReturn>;
   promise = new Promise(async (res, rej) => {
     console.group(folder);
     console.time("Timer");
 
-    let returns: CodeReturn = {
+    const returns: CodeReturn = {
       solution: [],
       student: [],
       isCorrect: true,
       warnings: await getWarnings(`./public/assignments/${folder}/upload.cpp`),
     };
     let count = 0;
-    let solutionexec = await compileCpp(
+    const solutionexec = await compileCpp(
       `./public/assignments/${folder}/solution.cpp`
     );
-    let studentexec = await compileCpp(
+    const studentexec = await compileCpp(
       `./public/assignments/${folder}/upload.cpp`
     );
     console.timeLog("Timer", "-Compiled");
     for (let i = 0; i < (config.input ? config.input.length : 1); i++) {
-      let options: Options = {
+      const options: Options = {
         stdin: config.input ? config.input[i] : undefined,
         compileTimeout: 1000,
       };
@@ -197,16 +201,14 @@ export function getReturns(folder: string): Promise<CodeReturn> {
               returns.solution.push(solution.stdout);
               returns.student.push(student.stdout);
               if (
-                !(
-                  solution.stdout.replace(/\s+/g, "") ===
-                  student.stdout.replace(/\s+/g, "")
-                )
+                solution.stdout.replace(/\s+/g, "") !==
+                student.stdout.replace(/\s+/g, "")
               ) {
-                //Bad Solution
+                // Bad Solution
                 returns.isCorrect = false;
               }
               if (count == (config.input ? config.input.length : 1)) {
-                //All inputs run through.
+                // All inputs run through.
                 res(returns);
                 console.timeLog("Timer", "-Tests Run");
                 console.timeEnd("Timer");

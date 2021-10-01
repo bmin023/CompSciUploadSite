@@ -1,5 +1,6 @@
-import nextConnect from "next-connect";
 import { NextApiRequest, NextApiResponse } from "next";
+import nextConnect from "next-connect";
+
 import { checkRegister } from "utils/userUtil";
 
 const apiRoute = nextConnect({
@@ -14,7 +15,7 @@ const apiRoute = nextConnect({
 });
 
 apiRoute.post((req: NextApiRequest, res: NextApiResponse) => {
-  let reg = checkRegister(req.body.username, req.body.password);
+  const reg = checkRegister(req.body.username, req.body.password);
   return res.status(200).json(reg);
 });
 

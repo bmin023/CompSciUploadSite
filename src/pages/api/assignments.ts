@@ -1,5 +1,6 @@
-import nextConnect from "next-connect";
 import { NextApiRequest, NextApiResponse } from "next";
+import nextConnect from "next-connect";
+
 import { getAssignments } from "utils/assignmentUtils";
 
 const apiRoute = nextConnect({
@@ -14,7 +15,7 @@ const apiRoute = nextConnect({
 });
 
 apiRoute.get((req: NextApiRequest, res) => {
-  res.status(200).json({"assignments":getAssignments()})
+  res.status(200).json({ assignments: getAssignments() });
 });
 
 export default apiRoute;

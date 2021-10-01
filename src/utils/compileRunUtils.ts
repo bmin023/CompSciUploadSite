@@ -1,17 +1,17 @@
-import{Result,Options} from "compile-run";
-import{ChildProcess, spawn} from "child_process";
+import { ChildProcess, spawn } from "child_process";
+import { Result, Options } from "compile-run";
 
-interface ResponseMessage
-{
-status:
-  'success' | 'error';
-executionResult:
-  Result;
-error:
-  any;
+interface ResponseMessage {
+  status: "success" | "error";
+  executionResult: Result;
+  error: any;
 }
 
-export function execute(cmd: string,folder:string,...args: any[]): Promise<Result> {
+export function execute(
+  cmd: string,
+  folder: string,
+  ...args: any[]
+): Promise<Result> {
   let timeout = 3000;
   let stdin = "";
   let stdoutLimit = 1000;
@@ -19,7 +19,7 @@ export function execute(cmd: string,folder:string,...args: any[]): Promise<Resul
   folder = `public/assignments/${folder}`;
   return new Promise((res, rej) => {
     let p: ChildProcess;
-    let arr: string[] | undefined = undefined;
+    let arr: string[] | undefined;
     if (args[0] && args[0] instanceof Array) {
       arr = args[0];
       if (args[1] && typeof args[1] === "object") {
@@ -27,7 +27,6 @@ export function execute(cmd: string,folder:string,...args: any[]): Promise<Resul
         stdin = (args[1] && args[1].stdin) || stdin;
         stderrLimit = (args[1] && args[1].stderrLimit) || stderrLimit;
         stdoutLimit = (args[1] && args[1].stdoutLimit) || stdoutLimit;
-
       }
     } else if (args[0] && typeof args[0] === "object") {
       timeout = (args[0] && args[0].timeout) || timeout;
@@ -63,12 +62,12 @@ export async function runExecutable(
   folder: string,
   options?: Options
 ): Promise<Result> {
-  let res = await execute(filePath, folder, options);
+  const res = await execute(filePath, folder, options);
   if (res.signal === "SIGSEGV") {
-    //probably seg fault and other memory/pagination issues
+    // probably seg fault and other memory/pagination issues
     res.errorType = "run-time";
   } else if (res.signal === "SIGTERM") {
-    //probably timeout or killed by SO somehow
+    // probably timeout or killed by SO somehow
     res.errorType = "run-timeout";
   }
   return res;

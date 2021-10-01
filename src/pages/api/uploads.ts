@@ -1,12 +1,12 @@
-import nextConnect from "next-connect";
-import formidable from 'formidable';
+import formidable from "formidable";
 import fs from "fs";
 import { NextApiRequest, NextApiResponse } from "next";
-import { checkIfGood, CodeReturn, getAssignments, getFolders, getReturns } from "utils/assignmentUtils";
+import nextConnect from "next-connect";
 
+import { CodeReturn, getReturns } from "utils/assignmentUtils";
 
 const apiRoute = nextConnect({
-  onError(error, req, res : NextApiResponse) {
+  onError(error, req, res: NextApiResponse) {
     res
       .status(501)
       .json({ error: `Sorry something Happened! ${error.message}` });
@@ -16,25 +16,27 @@ const apiRoute = nextConnect({
   },
 });
 
-export type UploadPostRes = {
-  returns: CodeReturn;
-}
-
-apiRoute.post((req : NextApiRequest, res) => {
-  const form = new formidable.IncomingForm();
-  form.parse(req, async function (err, fields, files) {
-    await saveFile(files.file as unknown as formidable.File, fields.dest as string);
-    let returns = await getReturns(fields.dest as string);
-    return res.status(200).json({returns});
-  });
-});
-
-const saveFile = async (file: formidable.File,dest:string) => {
+const saveFile = async (file: formidable.File, dest: string) => {
   const data = fs.readFileSync(file.path);
   fs.writeFileSync(`./public/assignments/${dest}/upload.cpp`, data);
-  await fs.unlinkSync(file.path);
-  return;
+  fs.unlinkSync(file.path);
 };
+
+export type UploadPostRes = {
+  returns: CodeReturn;
+};
+
+apiRoute.post((req: NextApiRequest, res) => {
+  const form = new formidable.IncomingForm();
+  form.parse(req, async (err, fields, files) => {
+    await saveFile(
+      files.file as unknown as formidable.File,
+      fields.dest as string
+    );
+    const returns = await getReturns(fields.dest as string);
+    res.status(200).json({ returns });
+  });
+});
 
 export default apiRoute;
 

@@ -1,14 +1,21 @@
-import { Button, ButtonProps } from "@chakra-ui/button";
-import React, { Children } from "react";
+import { Button, ButtonProps } from "@chakra-ui/react";
+import React from "react";
 
 export interface IProps {
   acceptedFileTypes?: string;
   allowMultipleFiles?: boolean;
   index: number;
-  onUpload: (formData: FormData,index:number) => void;
+  onUpload: (formData: FormData, index: number) => void;
 }
 
-export const FileUpload: React.FC<IProps & ButtonProps> = ({acceptedFileTypes,allowMultipleFiles,onUpload,children,index,...rest}) => {
+export const FileUpload: React.FC<IProps & ButtonProps> = ({
+  acceptedFileTypes,
+  allowMultipleFiles,
+  onUpload,
+  children,
+  index,
+  ...rest
+}) => {
   const fileInputRef = React.useRef<HTMLInputElement | null>(null);
   const formRef = React.useRef<HTMLFormElement | null>(null);
 
@@ -25,7 +32,7 @@ export const FileUpload: React.FC<IProps & ButtonProps> = ({acceptedFileTypes,al
 
     formData.append("file", event.target.files[0]);
 
-    onUpload(formData,index);
+    onUpload(formData, index);
 
     formRef.current?.reset();
   };
