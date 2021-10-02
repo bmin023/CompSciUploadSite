@@ -1,10 +1,10 @@
 {
   "functions": {
     "pages/api/uploads": {
-      "includeFiles": "./public/**"
+      "includeFiles": "assignments/**"
     },
     "pages/index": {
-      "includeFiles": "./public/**"
+      "includeFiles": "assignments/**"
     }
   }
 }
