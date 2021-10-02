@@ -13,7 +13,7 @@ export function getFolders(filePath: fs.PathLike): string[] {
 }
 
 function getConfig(folder: fs.PathLike): JSONConfig {
-  const buffer = fs.readFileSync(`./public/assignments/${folder}/config.json`);
+  const buffer = fs.readFileSync(`/assignments/${folder}/config.json`);
   return JSON.parse(buffer as unknown as string) as JSONConfig;
 }
 
@@ -34,7 +34,7 @@ export type Assignment = {
 
 export function getAssignments(): Assignment[] {
   const assignments = [] as Assignment[];
-  getFolders("./public/assignments").forEach((folder) => {
+  getFolders("/assignments").forEach((folder) => {
     const config = getConfig(folder);
     if (config.visible) {
       assignments.push({
