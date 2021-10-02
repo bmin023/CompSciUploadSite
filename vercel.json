@@ -1,0 +1,10 @@
+{
+  "functions": {
+    "api/uploads.ts": {
+      "includeFiles": "./public/**"
+    },
+    "index": {
+      "includeFiles": "./public/**"
+    }
+  }
+}
