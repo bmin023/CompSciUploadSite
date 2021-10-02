@@ -1,6 +1,6 @@
 {
   "functions": {
-    "api/uploads.ts": {
+    "api/uploads": {
       "includeFiles": "./public/**"
     },
     "index": {
