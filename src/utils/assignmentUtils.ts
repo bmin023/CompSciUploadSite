@@ -2,7 +2,7 @@ import { Options } from "compile-run";
 import { compileCpp } from "compile-run/dist/lib/cpp/compile-file";
 import fs from "fs";
 import readline from "readline";
-
+import {join} from 'path'
 import { runExecutable } from "./compileRunUtils";
 
 export function getFolders(filePath: fs.PathLike): string[] {
@@ -13,7 +13,7 @@ export function getFolders(filePath: fs.PathLike): string[] {
 }
 
 function getConfig(folder: fs.PathLike): JSONConfig {
-  const buffer = fs.readFileSync(`/assignments/${folder}/config.json`);
+  const buffer = fs.readFileSync(join(__dirname,`assignments/${folder}/config.json`));
   return JSON.parse(buffer as unknown as string) as JSONConfig;
 }
 
@@ -34,7 +34,7 @@ export type Assignment = {
 
 export function getAssignments(): Assignment[] {
   const assignments = [] as Assignment[];
-  getFolders("/assignments").forEach((folder) => {
+  getFolders(join(__dirname,"assignments")).forEach((folder) => {
     const config = getConfig(folder);
     if (config.visible) {
       assignments.push({
