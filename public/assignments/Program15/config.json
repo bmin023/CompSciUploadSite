@@ -1,0 +1,9 @@
+{
+  "name": "Matrix Array",
+  "desc": "Given a set of values, output the corresponding matrix of size n*n",
+  "visible": true,
+  "input": [
+    "1 2 3 4 5 21 75 0"
+  ],
+  "order": 15
+}
