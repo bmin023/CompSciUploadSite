@@ -2,6 +2,7 @@ import formidable from "formidable";
 import fs from "fs";
 import { NextApiRequest, NextApiResponse } from "next";
 import nextConnect from "next-connect";
+import path from "path";
 
 import { CodeReturn, getReturns } from "utils/assignmentUtils";
 
@@ -16,9 +17,9 @@ const apiRoute = nextConnect({
   },
 });
 
-const saveFile = async (file: formidable.File, dest: string) => {
+const saveFile = async (file: formidable.File, folder: string) => {
   const data = fs.readFileSync(file.path);
-  fs.writeFileSync(`./public/assignments/${dest}/upload.cpp`, data);
+  fs.writeFileSync(path.join(process.cwd(),"public","assignments",folder,"upload.cpp"), data);
   fs.unlinkSync(file.path);
 };
 
