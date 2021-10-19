@@ -1,7 +1,8 @@
-import { Options } from "compile-run";
+import { Options, Result } from "compile-run";
 import { compileCpp } from "compile-run/dist/lib/cpp/compile-file";
 import fs from "fs";
 import readline from "readline";
+import path from "path";
 
 import { runExecutable } from "./compileRunUtils";
 
@@ -181,57 +182,58 @@ export function getReturns(folder: string): Promise<CodeReturn> {
       warnings: await getWarnings(`./public/assignments/${folder}/upload.cpp`),
     };
     let count = 0;
-    const solutionexec = await compileCpp(
-      `./public/assignments/${folder}/solution.cpp`
+    // const solutionexec = await compileCpp(
+    //   `./public/assignments/${folder}/solution.cpp`
+    // );
+    const solutionexec = path.join(
+      __dirname,
+      "..",
+      "..",
+      "..",
+      `public`,
+      "assignments",
+      folder,
+      `solution.exe`
     );
     const studentexec = await compileCpp(
       `./public/assignments/${folder}/upload.cpp`
     );
     console.timeLog("Timer", "-Compiled");
+
+    const solPromises: Promise<Result>[] = []
+    const studPromises: Promise<Result>[] = [];
+
     for (let i = 0; i < (config.input ? config.input.length : 1); i++) {
       const options: Options = {
         stdin: config.input ? config.input[i] : undefined,
         compileTimeout: 1000,
       };
-      runExecutable(solutionexec, folder, options)
-        .then((solution) => {
-          runExecutable(studentexec, folder, options)
-            .then((student) => {
-              count++;
-              returns.solution.push(solution.stdout);
-              returns.student.push(student.stdout);
-              if (
-                solution.stdout.replace(/\s+/g, "") !==
-                student.stdout.replace(/\s+/g, "")
-              ) {
-                // Bad Solution
-                returns.isCorrect = false;
-              }
-              if (count == (config.input ? config.input.length : 1)) {
-                // All inputs run through.
-                res(returns);
-                console.timeLog("Timer", "-Tests Run");
-                console.timeEnd("Timer");
-                console.groupEnd();
-              }
-            })
-            .catch((solerr) => {
-              res({
-                isCorrect: false,
-                student: ["Something went wrong."],
-                solution: ["I don't know what."],
-                warnings: [],
-              });
-            });
-        })
-        .catch((solerr) => {
-          res({
-            isCorrect: false,
-            solution: ["Something went wrong."],
-            student: ["I don't know what."],
-            warnings: [],
-          });
-        });
+      
+      solPromises.push(runExecutable(solutionexec, folder, options));
+      studPromises.push(runExecutable(studentexec, folder, options));
+    }
+    for (let i = 0; i < (config.input ? config.input.length : 1); i++) {
+      
+      const solution = await solPromises[i];
+      const student = await studPromises[i];
+
+      count++;
+      returns.solution.push(solution.stdout);
+      returns.student.push(student.stdout);
+      if (
+        solution.stdout.replace(/\s+/g, "") !==
+        student.stdout.replace(/\s+/g, "")
+      ) {
+        // Bad Solution
+        returns.isCorrect = false;
+      }
+      if (count == (config.input ? config.input.length : 1)) {
+        // All inputs run through.
+        res(returns);
+        console.timeLog("Timer", "-Tests Run");
+        console.timeEnd("Timer");
+        console.groupEnd();
+      }
     }
   });
   return promise;

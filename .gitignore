@@ -8,6 +8,7 @@
 
 #ignore public uploads
 /public/assignments/*/upload.cpp
+/public/assignments/*/solution.cpp
 
 # testing
 /coverage
