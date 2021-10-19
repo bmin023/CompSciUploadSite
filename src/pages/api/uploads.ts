@@ -19,7 +19,10 @@ const apiRoute = nextConnect({
 
 const saveFile = async (file: formidable.File, folder: string) => {
   const data = fs.readFileSync(file.path);
-  fs.writeFileSync(path.join(process.cwd(),"public","assignments",folder,"upload.cpp"), data);
+  fs.writeFileSync(
+    path.join(process.cwd(), "public", "assignments", folder, "upload.cpp"),
+    data
+  );
   fs.unlinkSync(file.path);
 };
 
