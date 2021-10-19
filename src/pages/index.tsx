@@ -8,7 +8,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import axios from "axios";
-import { GetServerSideProps, NextPage } from "next";
+import { GetStaticProps, NextPage } from "next";
 import PropTypes from "prop-types";
 import React, { useState } from "react";
 
@@ -85,6 +85,7 @@ const Home: NextPage<IProps> = ({ assignments }) => {
         {assignments.map((assignment, i) => {
           return (
             <AssignmentBox
+              key={assignment.order}
               assignment={assignment}
               colorMode={colorMode}
               filename={fileNames[i]}
@@ -106,7 +107,7 @@ const Home: NextPage<IProps> = ({ assignments }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps<IProps> = async () => {
+export const getStaticProps: GetStaticProps<IProps> = async () => {
   return {
     props: {
       assignments: getAssignments(),

@@ -13,8 +13,8 @@ export function getFolders(filePath: fs.PathLike): string[] {
   });
 }
 
-function getConfig(folder: fs.PathLike): JSONConfig {
-  const buffer = fs.readFileSync(`./public/assignments/${folder}/config.json`);
+function getConfig(folder: string): JSONConfig {
+  const buffer = fs.readFileSync(path.join(process.cwd(),"public","assignments",folder,"config.json"));
   return JSON.parse(buffer as unknown as string) as JSONConfig;
 }
 
@@ -35,7 +35,7 @@ export type Assignment = {
 
 export function getAssignments(): Assignment[] {
   const assignments = [] as Assignment[];
-  getFolders("./public/assignments").forEach((folder) => {
+  getFolders(path.join(process.cwd(),"public","assignments")).forEach((folder) => {
     const config = getConfig(folder);
     if (config.visible) {
       assignments.push({
@@ -179,24 +179,21 @@ export function getReturns(folder: string): Promise<CodeReturn> {
       solution: [],
       student: [],
       isCorrect: true,
-      warnings: await getWarnings(`./public/assignments/${folder}/upload.cpp`),
+      warnings: await getWarnings(path.join(process.cwd(),"public","assignments",folder,"upload.cpp")),
     };
     let count = 0;
     // const solutionexec = await compileCpp(
     //   `./public/assignments/${folder}/solution.cpp`
     // );
     const solutionexec = path.join(
-      __dirname,
-      "..",
-      "..",
-      "..",
+      process.cwd(),
       `public`,
       "assignments",
       folder,
       `solution.exe`
     );
     const studentexec = await compileCpp(
-      `./public/assignments/${folder}/upload.cpp`
+      path.join(process.cwd(), "public", "assignments", folder, "upload.cpp")
     );
     console.timeLog("Timer", "-Compiled");
 

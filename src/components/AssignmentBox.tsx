@@ -51,7 +51,7 @@ const AssignmentBox: React.FC<AssignmentProps> = ({
   };
 
   return (
-    <Box p={2} key={assignment.order}>
+    <Box p={2}>
       <Divider m={2} size="10px" />
       <Text my={2} fontSize="xl" fontWeight="bold" textAlign="center">
         {`${assignment.order}: ${assignment.name}`}:&nbsp;
