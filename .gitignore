@@ -9,6 +9,8 @@
 #ignore public uploads
 /public/assignments/*/upload.cpp
 /public/assignments/*/solution.cpp
+/public/assignments/*/uplaod.exe
+
 
 # testing
 /coverage

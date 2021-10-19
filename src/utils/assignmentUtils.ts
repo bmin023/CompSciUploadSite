@@ -1,10 +1,9 @@
 import { Options, Result } from "compile-run";
-import { compileCpp } from "compile-run/dist/lib/cpp/compile-file";
 import fs from "fs";
 import readline from "readline";
 import path from "path";
 
-import { runExecutable } from "./compileRunUtils";
+import { runExecutable, compileCpp } from "./compileRunUtils";
 
 export function getFolders(filePath: fs.PathLike): string[] {
   const filenames = fs.readdirSync(filePath);
@@ -193,7 +192,8 @@ export function getReturns(folder: string): Promise<CodeReturn> {
       `solution.exe`
     );
     const studentexec = await compileCpp(
-      path.join(process.cwd(), "public", "assignments", folder, "upload.cpp")
+      path.join(process.cwd(), "public", "assignments", folder, "upload.cpp"),
+      folder
     );
     console.timeLog("Timer", "-Compiled");
 

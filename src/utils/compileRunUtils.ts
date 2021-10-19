@@ -1,5 +1,12 @@
+/*
+All this was derived from vibhor1997a's repository compile-run. There was just some lines
+that had to change for it to work in my enviornment but all credit goes to him.
+*/
+
 import { ChildProcess, spawn } from "child_process";
 import { Result, Options } from "compile-run";
+import path from "path";
+import os from 'os';
 
 interface ResponseMessage {
   status: "success" | "error";
@@ -71,4 +78,31 @@ export async function runExecutable(
     res.errorType = "run-timeout";
   }
   return res;
+}
+
+export async function compileCpp(
+  filePath: string,
+  folder: string,
+  options?: Options
+): Promise<string> {
+  let compileTimeout = (options && options.compileTimeout) || 3000;
+  let executableExt;
+  if (os.type() === "Windows_NT") {
+    executableExt = "exe";
+  } else {
+    executableExt = "out";
+  }
+  const compilationPath: string = (options && options.compilationPath) || "gcc";
+  let executablePath = path.join(process.cwd(), "public","assignments",folder,`upload.exe`);
+  let res = await execute(
+    compilationPath,
+    folder,
+    [filePath, "-o", executablePath, "-lstdc++"],
+    { timeout: compileTimeout }
+  );
+  if (res.exitCode !== 0) {
+    res.errorType = "compile-time";
+    throw res;
+  }
+  return executablePath;
 }
